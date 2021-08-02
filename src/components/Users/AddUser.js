@@ -4,14 +4,20 @@ import Button from "../UI/Button";
 import classes from "./AddUser.module.css";
 
 const AddUser = (props) => {
-  const [user, setUser] = useState({ username: "", age: "" });
+  const [user, setUser] = useState({
+    username: "",
+    age: "",
+    id: Math.random().toString(),
+  });
   const [isValid, setIsValid] = useState(true);
   const onSubmitForm = (e) => {
     e.preventDefault();
     if (user.username.trim().length === 0 || user.age.trim().length === 0)
       setIsValid(false);
     if (+user.age < 1) return;
-    setUser({ username: "", age: "" });
+    if (isNaN(user.age)) return;
+    props.onAddUser(user);
+    setUser({ username: "", age: "", id: Math.random().toString() });
   };
   const onInputChange = (e) => {
     e.target.id === "username" &&
