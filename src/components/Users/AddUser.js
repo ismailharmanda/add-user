@@ -7,6 +7,7 @@ const AddUser = (props) => {
   const [user, setUser] = useState({ username: "", age: "" });
   const onSubmitForm = (e) => {
     e.preventDefault();
+    setUser({ username: "", age: "" });
   };
   const onInputChange = (e) => {
     console.log(user);
@@ -23,9 +24,14 @@ const AddUser = (props) => {
     <Card className={classes.input}>
       <form onSubmit={onSubmitForm}>
         <label htmlFor="username">Username</label>
-        <input id="username" type="text" onChange={onInputChange} />
+        <input
+          id="username"
+          type="text"
+          onChange={onInputChange}
+          value={user.username}
+        />
         <label htmlFor="age">Age</label>
-        <input id="age" type="text" onChange={onInputChange} />
+        <input id="age" type="text" onChange={onInputChange} value={user.age} />
         <Button type="submit">Add User</Button>
       </form>
     </Card>
