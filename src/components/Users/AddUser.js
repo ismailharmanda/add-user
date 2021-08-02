@@ -5,12 +5,15 @@ import classes from "./AddUser.module.css";
 
 const AddUser = (props) => {
   const [user, setUser] = useState({ username: "", age: "" });
+  const [isValid, setIsValid] = useState(true);
   const onSubmitForm = (e) => {
     e.preventDefault();
+    if (user.username.trim().length === 0 || user.age.trim().length === 0)
+      setIsValid(false);
+    if (+user.age < 1) return;
     setUser({ username: "", age: "" });
   };
   const onInputChange = (e) => {
-    console.log(user);
     e.target.id === "username" &&
       setUser((prev) => {
         return { ...prev, username: e.target.value };
