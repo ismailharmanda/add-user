@@ -48,7 +48,7 @@ const AddUser = (props) => {
       });
   };
   const hideModal = () => {
-    setError();
+    setError(null);
   };
   return (
     <>
