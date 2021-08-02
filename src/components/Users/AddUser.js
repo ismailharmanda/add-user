@@ -10,13 +10,30 @@ const AddUser = (props) => {
     age: "",
     id: Math.random().toString(),
   });
-  const [isValid, setIsValid] = useState(true);
+  const [error, setError] = useState();
   const onSubmitForm = (e) => {
     e.preventDefault();
-    if (user.username.trim().length === 0 || user.age.trim().length === 0)
-      setIsValid(false);
-    if (+user.age < 1) return;
-    if (isNaN(user.age)) return;
+    if (user.username.trim().length === 0 || user.age.trim().length === 0) {
+      setError({
+        title: "Invalid Input",
+        message: "Please enter a valid name and age(non-empty values).",
+      });
+      return;
+    }
+    if (+user.age < 1) {
+      setError({
+        title: "Invalid Input",
+        message: "Please enter a valid age(bigger than 0).",
+      });
+      return;
+    }
+    if (isNaN(+user.age) || !Number.isInteger(+user.age)) {
+      setError({
+        title: "Invalid Input",
+        message: "Please enter a valid age(only integers).",
+      });
+      return;
+    }
     props.onAddUser(user);
     setUser({ username: "", age: "", id: Math.random().toString() });
   };
@@ -30,9 +47,18 @@ const AddUser = (props) => {
         return { ...prev, age: e.target.value };
       });
   };
+  const hideModal = () => {
+    setError();
+  };
   return (
     <>
-      <ErrorModal title="An Error Occured" message="Something went wrong" />
+      {error && (
+        <ErrorModal
+          hideModal={hideModal}
+          title={error.title}
+          message={error.message}
+        />
+      )}
       <Card className={classes.input}>
         <form onSubmit={onSubmitForm}>
           <label htmlFor="username">Username</label>
