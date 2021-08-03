@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 import ErrorModal from "../UI/ErrorModal";
 import classes from "./AddUser.module.css";
 
 const AddUser = (props) => {
+  const usernameInputRef = useRef();
+  const ageInputRef = useRef();
   const [user, setUser] = useState({
     username: "",
     age: "",
@@ -67,6 +69,7 @@ const AddUser = (props) => {
             type="text"
             onChange={onInputChange}
             value={user.username}
+            ref={usernameInputRef}
           />
           <label htmlFor="age">Age</label>
           <input
@@ -74,6 +77,7 @@ const AddUser = (props) => {
             type="text"
             onChange={onInputChange}
             value={user.age}
+            ref={ageInputRef}
           />
           <Button type="submit">Add User</Button>
         </form>
