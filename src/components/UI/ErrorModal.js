@@ -31,6 +31,14 @@ const ErrorModal = (props) => {
         <Backdrop hideModal={props.hideModal} />,
         document.querySelector("#backdrop-root")
       )}
+      {ReactDOM.createPortal(
+        <ModalOverlay
+          title={props.title}
+          message={props.message}
+          hideModal={props.hideModal}
+        />,
+        document.querySelector("#overlay-root")
+      )}
     </>
   );
 };
